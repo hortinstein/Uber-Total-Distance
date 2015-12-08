@@ -121,6 +121,10 @@ app.get('/profile', ensureAuthenticated, function (request, response) {
 
 // /history API endpoint
 app.get('/history', ensureAuthenticated, function (request, response) {
+  var parameters = {
+    offset : 0,
+    limit: 50
+  };
 	getAuthorizedRequest('/v1.2/history', request.user.accessToken, function (error, res) {
 		if (error) { console.log("err", error); }
     console.log(res);
@@ -164,6 +168,7 @@ function getAuthorizedRequest(endpoint, accessToken, callback) {
   var options = {
     hostname: "sandbox-api.uber.com",
     path: endpoint,
+    limit:50,
     method: "GET",
     headers: {
       Authorization: "Bearer " + accessToken
